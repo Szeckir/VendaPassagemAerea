@@ -2,7 +2,7 @@ public class Aviao extends Aeronave{
     private final int codigoAviao;
     private final String nome;
     private final int qtdAssentos;
-    private boolean disponibilidade;
+    private boolean disponibilidade = true;
 
     public boolean isDisponibilidade() {
         return disponibilidade;

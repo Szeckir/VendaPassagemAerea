@@ -24,11 +24,15 @@ public class Testes {
         assertEquals(expected, actual);
     }
 
-    @Test
+    @Test // Validar criacao de cliente
     public void criacaoCliente() throws Exception {
         Cliente cliente1 = new Cliente("Thomaz Szeckir", "86735934091", "5551999602004");
+    }
 
-        System.out.println(cliente1.getNome());
+    @Test
+    public void voosPendentes() throws Exception {
+        
     }
     
+
 }
