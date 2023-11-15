@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Voo {
@@ -7,6 +8,8 @@ public class Voo {
     private String horario; // 00:00 
     private Aviao aeronave;
     private String numeroVoo;
+    private static ArrayList<Voo> voosDisponiveis = new ArrayList<>();
+    private static ArrayList<Voo> voosCancelados = new ArrayList<>();
 
 
     public Voo(String origem, String destino, String horario, Aviao aeronave) throws Exception {
@@ -16,6 +19,7 @@ public class Voo {
         this.aeronave = disponibilidadeAviao(aeronave);
         numeroVoo = gerarNumeroVoo();
         System.out.println("VOO: [ " + numeroVoo + " ], Saindo de: " + origem + " com Destino a: " + destino + " criado.");
+        voosDisponiveis.add(this);
     }    
 
     private String gerarNumeroVoo() {
@@ -47,10 +51,35 @@ public class Voo {
     public void confirmarVoo() {
         if (aeronave.isDisponibilidade() == false) {
             System.out.println("Avião já confirmado em outro voo");
+            cancelarVoo(this.numeroVoo);
         } else {
             aeronave.setDisponibilidade(false);
             System.out.println("VOO: [ " + numeroVoo + " ] Confirmado");
         } 
+    }
+
+    public void cancelarVoo(String numeroVoo) {
+
+        for(int i = 0; i < voosDisponiveis.size(); i++) {
+            if (voosDisponiveis.get(i).numeroVoo == numeroVoo) {
+                voosCancelados.add(voosDisponiveis.get(i));
+                System.out.println("Voo: " + voosDisponiveis.get(i).numeroVoo + " - CANCELADO");
+                voosDisponiveis.remove(i);
+            } else {
+                System.out.println("O voo não existe");
+            }
+        }
+    }
+
+    public void listagemVoos() {
+        for(int i =0; i < voosDisponiveis.size(); i++) {
+            if (voosDisponiveis.get(i).aeronave.isDisponibilidade() == false) {
+                System.out.println(voosDisponiveis.get(i) + " - CONFIRMADO");
+            } else {
+                System.out.println(voosDisponiveis.get(i) + " - NÃO CONFIRMADO");
+            }
+            
+        }
     }
     
 }
