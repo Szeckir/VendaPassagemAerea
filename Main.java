@@ -6,12 +6,14 @@ public class Main {
 
         Voo voo1 = new Voo("Porto Alegre", "Brasilia", "12:30", aviao1);
         Voo voo2 = new Voo("Porto Alegre", "Maceio", "12:38", aviao2);
-        Voo voo3 = new Voo("Maceio", "Miami", "12:38", aviao3);
+        Voo voo3 = new Voo("Maceio", "Miami", "12:38", aviao1);
 
         voo1.confirmarVoo();
         voo2.confirmarVoo();
+        voo3.confirmarVoo();
 
-        voo1.listagemVoos();
+        voo1.listagemVoosDisponiveis();
+        voo1.listagemVoosCancelados();
 
     }
 }

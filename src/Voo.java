@@ -65,20 +65,36 @@ public class Voo {
                 voosCancelados.add(voosDisponiveis.get(i));
                 System.out.println("Voo: " + voosDisponiveis.get(i).numeroVoo + " - CANCELADO");
                 voosDisponiveis.remove(i);
-            } else {
-                System.out.println("O voo não existe");
+                return;
             }
         }
+
+        System.out.println("O voo não existe");
     }
 
-    public void listagemVoos() {
+    public void listagemVoosDisponiveis() {
+        if (voosDisponiveis.isEmpty()) {
+            System.out.println("Nenhum VOO disponivel.");
+            return;
+        }
+        
         for(int i =0; i < voosDisponiveis.size(); i++) {
             if (voosDisponiveis.get(i).aeronave.isDisponibilidade() == false) {
                 System.out.println(voosDisponiveis.get(i) + " - CONFIRMADO");
             } else {
                 System.out.println(voosDisponiveis.get(i) + " - NÃO CONFIRMADO");
             }
-            
+        }
+    }
+
+    public void listagemVoosCancelados() {
+        if (voosCancelados.isEmpty()) {
+            System.out.println("Nenhum VOO cancelado.");
+            return;
+        }
+
+        for (int i = 0; i < voosCancelados.size(); i++) {
+            System.out.println(voosCancelados.get(i) + " - CANCELADO");
         }
     }
     
