@@ -15,7 +15,7 @@ public class Voo {
     public Voo(String origem, String destino, String horario, Aviao aeronave) throws Exception {
         this.origem = origem;
         this.destino = destino;
-        this.horario = horario;
+        this.horario = verificaHorario(horario);
         this.aeronave = disponibilidadeAviao(aeronave);
         numeroVoo = gerarNumeroVoo();
         System.out.println("VOO: [ " + numeroVoo + " ], Saindo de: " + origem + " com Destino a: " + destino + " criado.");
@@ -96,6 +96,22 @@ public class Voo {
         for (int i = 0; i < voosCancelados.size(); i++) {
             System.out.println(voosCancelados.get(i) + " - CANCELADO");
         }
+    }
+
+    public boolean verificaHorarioAux(String time) {
+
+        String regex = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
+
+
+        return time.matches(regex);
+    }
+
+    public String verificaHorario (String time){
+        if(verificaHorarioAux(time) == false){
+            //return; //fazer uma exception
+
+        }
+        return time;
     }
     
 }

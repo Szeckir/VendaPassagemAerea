@@ -5,11 +5,11 @@ public class Main {
         Aviao aviao3 = new Aviao(8910, "Airbus", 30, "Boeing-130");
 
         Voo voo1 = new Voo("Porto Alegre", "Brasilia", "12:30", aviao1);
-        Voo voo2 = new Voo("Porto Alegre", "Maceio", "12:38", aviao2);
-        Voo voo3 = new Voo("Maceio", "Miami", "12:38", aviao1);
+        Voo voo2 = new Voo("Porto Alegre", "Maceio", "12:38", aviao1);
+        Voo voo3 = new Voo("Maceio", "Miami", "12:38", aviao2);
+        
 
         voo1.confirmarVoo();
-        voo2.confirmarVoo();
         voo3.confirmarVoo();
 
         voo1.listagemVoosDisponiveis();
