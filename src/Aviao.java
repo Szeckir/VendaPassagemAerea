@@ -4,6 +4,10 @@ public class Aviao extends Aeronave{
     private final int qtdAssentos;
     private boolean disponibilidade = true;
 
+    public int getQtdAssentos() {
+        return qtdAssentos;
+    }
+
     public boolean isDisponibilidade() {
         return disponibilidade;
     }

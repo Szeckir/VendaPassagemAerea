@@ -7,13 +7,15 @@ public class Main {
         Voo voo1 = new Voo("Porto Alegre", "Brasilia", "12:30", aviao1);
         Voo voo2 = new Voo("Porto Alegre", "Maceio", "12:38", aviao1);
         Voo voo3 = new Voo("Maceio", "Miami", "12:38", aviao2);
-        
 
         voo1.confirmarVoo();
         voo3.confirmarVoo();
 
-        voo1.listagemVoosDisponiveis();
-        voo1.listagemVoosCancelados();
+        Cliente cliente1 = new Cliente("Thomaz", "86735934091", "9219391");
 
+        Venda venda1 = new Venda(cliente1, voo1);
+
+
+        
     }
 }

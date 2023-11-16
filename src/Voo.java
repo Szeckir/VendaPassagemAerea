@@ -8,19 +8,32 @@ public class Voo {
     private String horario; // 00:00 
     private Aviao aeronave;
     private String numeroVoo;
+    private int assentosDisponiveis;
     private static ArrayList<Voo> voosDisponiveis = new ArrayList<>();
     private static ArrayList<Voo> voosCancelados = new ArrayList<>();
 
+    public Aviao getAeronave() {
+        return aeronave;
+    }
 
     public Voo(String origem, String destino, String horario, Aviao aeronave) throws Exception {
         this.origem = origem;
         this.destino = destino;
         this.horario = verificaHorario(horario);
         this.aeronave = disponibilidadeAviao(aeronave);
+        assentosDisponiveis = aeronave.getQtdAssentos();
         numeroVoo = gerarNumeroVoo();
         System.out.println("VOO: [ " + numeroVoo + " ], Saindo de: " + origem + " com Destino a: " + destino + " criado.");
         voosDisponiveis.add(this);
     }    
+
+    protected void decretarAssentos() {
+        assentosDisponiveis--;
+    }
+
+    public int getAssentosDisponiveis() {
+        return assentosDisponiveis;
+    }
 
     private String gerarNumeroVoo() {
         Random aleatorio = new Random();
@@ -41,7 +54,7 @@ public class Voo {
                 + ", numeroVoo=" + numeroVoo + "]";
     }
 
-    public Aviao disponibilidadeAviao(Aviao aeronave) throws Exception {
+    private Aviao disponibilidadeAviao(Aviao aeronave) throws Exception {
         if (aeronave.isDisponibilidade() == false) {
             throw new Exception("Aviao Indisponivel");
         } 
@@ -72,7 +85,23 @@ public class Voo {
         System.out.println("O voo não existe");
     }
 
-    public void listagemVoosDisponiveis() {
+    private boolean verificaHorarioAux(String time) {
+
+        String regex = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
+
+
+        return time.matches(regex);
+    }
+
+    private String verificaHorario (String time){
+        if(verificaHorarioAux(time) == false){
+            //return; //fazer uma exception
+
+        }
+        return time;
+    }
+
+    private void listagemVoosDisponiveis() {
         if (voosDisponiveis.isEmpty()) {
             System.out.println("Nenhum VOO disponivel.");
             return;
@@ -87,7 +116,7 @@ public class Voo {
         }
     }
 
-    public void listagemVoosCancelados() {
+    private void listagemVoosCancelados() {
         if (voosCancelados.isEmpty()) {
             System.out.println("Nenhum VOO cancelado.");
             return;
@@ -97,21 +126,4 @@ public class Voo {
             System.out.println(voosCancelados.get(i) + " - CANCELADO");
         }
     }
-
-    public boolean verificaHorarioAux(String time) {
-
-        String regex = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
-
-
-        return time.matches(regex);
-    }
-
-    public String verificaHorario (String time){
-        if(verificaHorarioAux(time) == false){
-            //return; //fazer uma exception
-
-        }
-        return time;
-    }
-    
 }

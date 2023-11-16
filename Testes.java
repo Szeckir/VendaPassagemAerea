@@ -17,6 +17,7 @@ public class Testes {
     public void aviaoDispobilidadeAposVoo() throws Exception {
         Aviao aviao1 = new Aviao(123, "Aviao 1", 50, "Boeing");
         Voo voo1 = new Voo("Porto Alegre", "Brasilia", "12:35", aviao1);
+        voo1.confirmarVoo();
 
         boolean actual = aviao1.isDisponibilidade();
         boolean expected = false;
