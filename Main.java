@@ -5,17 +5,14 @@ public class Main {
         Aviao aviao3 = new Aviao(8910, "Airbus", 30, "Boeing-130");
 
         Voo voo1 = new Voo("Porto Alegre", "Brasilia", "12:30", aviao1);
-        Voo voo2 = new Voo("Porto Alegre", "Maceio", "12:38", aviao1);
-        Voo voo3 = new Voo("Maceio", "Miami", "12:38", aviao2);
+        Voo voo2 = new Voo("Porto Alegre", "Maceio", "12:38", aviao2);
+        Voo voo3 = new Voo("Maceio", "Miami", "12:38", aviao3);
 
         voo1.confirmarVoo();
-        voo3.confirmarVoo();
+        voo2.confirmarVoo();
+        voo2.cancelarVoo(voo2.getNumeroVoo());
 
-        Cliente cliente1 = new Cliente("Thomaz", "86735934091", "9219391");
-
-        System.out.println(voo1.getAssentosDisponiveis());
-        Venda venda1 = new Venda(cliente1, voo1);
-        System.out.println(voo1.getAssentosDisponiveis());
-
+        MenuConfig menu = new MenuConfig();
+        menu.run();
     }
 }

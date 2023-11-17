@@ -1,11 +1,22 @@
+import java.util.ArrayList;
+
 public class Aviao extends Aeronave{
     private final int codigoAviao;
     private final String nome;
     private final int qtdAssentos;
     private boolean disponibilidade = true;
+    private static ArrayList<Aviao> avioes = new ArrayList<>();
+
+    public static ArrayList<Aviao> getAvioes() {
+        return avioes;
+    }
 
     public int getQtdAssentos() {
         return qtdAssentos;
+    }
+
+    public int getCodigoAviao() {
+        return codigoAviao;
     }
 
     public boolean isDisponibilidade() {
@@ -22,6 +33,7 @@ public class Aviao extends Aeronave{
         this.nome = nome;
         this.qtdAssentos = qtdAssentos;
         disponibilidade = true;
+        avioes.add(this);
     }
 
 }

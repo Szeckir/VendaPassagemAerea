@@ -12,8 +12,32 @@ public class Voo {
     private static ArrayList<Voo> voosDisponiveis = new ArrayList<>();
     private static ArrayList<Voo> voosCancelados = new ArrayList<>();
 
+    public static ArrayList<Voo> getVoosDisponiveis() {
+        return voosDisponiveis;
+    }
+
+    public static ArrayList<Voo> getVoosCancelados() {
+        return voosCancelados;
+    }
+
     public Aviao getAeronave() {
         return aeronave;
+    }
+
+    public String getNumeroVoo() {
+        return numeroVoo;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public String getOrigem() {
+        return origem;
     }
 
     public Voo(String origem, String destino, String horario, Aviao aeronave) throws Exception {
@@ -23,7 +47,7 @@ public class Voo {
         this.aeronave = disponibilidadeAviao(aeronave);
         assentosDisponiveis = aeronave.getQtdAssentos();
         numeroVoo = gerarNumeroVoo();
-        System.out.println("VOO: [ " + numeroVoo + " ], Saindo de: " + origem + " com Destino a: " + destino + " criado.");
+        System.out.println("VOO NUMERO: [ " + numeroVoo + " ], Saindo de: [ " + origem + " ] com Destino a: [ " + destino + " ] criado.");
         voosDisponiveis.add(this);
     }    
 
@@ -105,29 +129,4 @@ public class Voo {
         return time;
     }
 
-    private void listagemVoosDisponiveis() {
-        if (voosDisponiveis.isEmpty()) {
-            System.out.println("Nenhum VOO disponivel.");
-            return;
-        }
-        
-        for(int i =0; i < voosDisponiveis.size(); i++) {
-            if (voosDisponiveis.get(i).aeronave.isDisponibilidade() == false) {
-                System.out.println(voosDisponiveis.get(i) + " - CONFIRMADO");
-            } else {
-                System.out.println(voosDisponiveis.get(i) + " - NÃO CONFIRMADO");
-            }
-        }
-    }
-
-    private void listagemVoosCancelados() {
-        if (voosCancelados.isEmpty()) {
-            System.out.println("Nenhum VOO cancelado.");
-            return;
-        }
-
-        for (int i = 0; i < voosCancelados.size(); i++) {
-            System.out.println(voosCancelados.get(i) + " - CANCELADO");
-        }
-    }
 }
