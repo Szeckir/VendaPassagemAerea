@@ -5,7 +5,11 @@ public class Venda {
     private String horarioCompra;
     private Cliente cliente;
     private Voo voo;
-    ArrayList<Venda> vendasRealizadas = new ArrayList<>();
+    private static ArrayList<Venda> vendasRealizadas = new ArrayList<>();
+
+    public static ArrayList<Venda> getVendasRealizadas() {
+        return vendasRealizadas;
+    }
 
     public Venda(Cliente cliente, Voo voo) {
         this.cliente = cliente;
@@ -19,7 +23,10 @@ public class Venda {
     
     @Override
     public String toString() {
-        return "Venda [horarioCompra=" + horarioCompra + ", cliente=" + cliente + ", voo=" + voo + "]";
+        System.out.println("Dados cliente: " + " Nome = [" + cliente.getNome() + "], CPF = [ " + cliente.getCpf() + "]");
+        System.out.println("Dados Voo: " + " Numero = [" + voo.getNumeroVoo() + "], Origem = [ " + voo.getOrigem() + " ], Destino = [" + voo.getDestino() + "], Horario = [" + voo.getHorario() + "]");
+        System.out.println("[Horario compra = [" + horarioCompra + "]");
+        return "==============================";
     }
 
 
@@ -48,5 +55,6 @@ public class Venda {
         System.out.println("Destino: " + this.voo.getDestino());
         System.out.println("Horario do Voo: " + this.voo.getHorario());
         System.out.println("Cliente: " + this.cliente.getNome());
+        System.out.println("=====================================");
     }
 }

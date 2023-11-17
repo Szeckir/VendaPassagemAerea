@@ -8,6 +8,14 @@ public class Main {
         Voo voo2 = new Voo("Porto Alegre", "Maceio", "12:38", aviao2);
         Voo voo3 = new Voo("Maceio", "Miami", "12:38", aviao3);
 
+        Cliente cliente1 = new Cliente("Thomaz Szeckir", "86735934091", "51999502004");
+        Cliente cliente2 = new Cliente("João da Silva", "87164329089", "51999602204");
+        Cliente cliente3 = new Cliente("Maria da Silva", "23435144467", "51999602044");
+
+        Venda venda1 = new Venda(cliente1, voo1);
+        Venda venda2 = new Venda(cliente2, voo2);
+        Venda venda3 = new Venda(cliente3, voo3);
+
         voo1.confirmarVoo();
         voo2.confirmarVoo();
         voo2.cancelarVoo(voo2.getNumeroVoo());

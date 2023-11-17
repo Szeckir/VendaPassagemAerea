@@ -47,7 +47,6 @@ public class Voo {
         this.aeronave = disponibilidadeAviao(aeronave);
         assentosDisponiveis = aeronave.getQtdAssentos();
         numeroVoo = gerarNumeroVoo();
-        System.out.println("VOO NUMERO: [ " + numeroVoo + " ], Saindo de: [ " + origem + " ] com Destino a: [ " + destino + " ] criado.");
         voosDisponiveis.add(this);
     }    
 

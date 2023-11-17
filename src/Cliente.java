@@ -4,12 +4,32 @@ public class Cliente {
     private final String nome;
     private final String cpf;
     private String telefone;
+    private static ArrayList<Cliente> clientes = new ArrayList<>();
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public static ArrayList<Cliente> getClientes() {
+        return clientes;
+    }
 
     public Cliente(String nome, String cpf, String telefone) throws Exception {
         this.nome = nome;
         this.cpf = adicionarCPF(cpf);
         this.telefone = validarTelefone(telefone);
+        clientes.add(this);
+    }
+
+    
+
+    @Override
+    public String toString() {
+        return "Cliente [nome=" + nome + ", cpf=" + cpf + ", telefone=" + telefone + "]";
     }
 
     public String getNome() {
@@ -26,24 +46,20 @@ public class Cliente {
     private String adicionarCPF(String cpf) throws Exception {
 
         if (validarCPF(cpf) == true) {
-            ArrayList<String> clientesCPF = new ArrayList<>();
-
-            if (clientesCPF.isEmpty()) {
-                clientesCPF.add(cpf);
+            if (clientes.isEmpty()) {
+                clientes.add(this);
                 return cpf;
         }
 
-        for(int i = 0; i < clientesCPF.size(); i++) {
-            if (clientesCPF.get(i) == cpf) {
+        for(int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i).cpf == cpf) {
                 throw new Exception("CPF já cadastrado");
             } 
         }
-
-        clientesCPF.add(cpf);
+        clientes.add(this);
         return cpf;
      }
       throw new Exception("ERROR: Erro na adição do CPF");
-
     }
 
     private boolean validarCPF(String cpf) {
