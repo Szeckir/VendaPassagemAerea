@@ -27,8 +27,12 @@ public class Voo {
         voosDisponiveis.add(this);
     }    
 
-    protected void decretarAssentos() {
-        assentosDisponiveis--;
+    public boolean decretarAssentos() {
+        if (assentosDisponiveis > 0) {
+            assentosDisponiveis--;
+            return true;
+        }
+        return false;
     }
 
     public int getAssentosDisponiveis() {

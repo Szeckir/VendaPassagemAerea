@@ -7,12 +7,13 @@ public class Venda {
 
     public Venda(Cliente cliente, Voo voo) {
         this.cliente = cliente;
-        this.voo = assentosDisponiveis();
+        this.voo = assentosDisponiveis(voo);
         this.horarioCompra = obterHorarioAtual();
+        //voo.decretarAssentos();
     }
 
-    private Voo assentosDisponiveis() {
-        if (voo.getAssentosDisponiveis() < 0) {
+    private Voo assentosDisponiveis(Voo voo) {
+        if (voo.getAssentosDisponiveis() > 0) {
             voo.decretarAssentos();
             return voo;
         } else {
@@ -24,6 +25,5 @@ public class Venda {
     public static LocalDateTime obterHorarioAtual() {
         return LocalDateTime.now();
     }
-
 
 }

@@ -13,8 +13,9 @@ public class Main {
 
         Cliente cliente1 = new Cliente("Thomaz", "86735934091", "9219391");
 
+        System.out.println(voo1.getAssentosDisponiveis());
         Venda venda1 = new Venda(cliente1, voo1);
-
+        System.out.println(voo1.getAssentosDisponiveis());
 
     }
 }
