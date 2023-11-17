@@ -77,8 +77,7 @@ public class Voo {
 
     @Override
     public String toString() {
-        return "Voo [origem=" + origem + ", destino=" + destino + ", horario=" + horario + ", aeronave=" + aeronave
-                + ", numeroVoo=" + numeroVoo + "]";
+        return "VOO -> Origem = " + origem + ", Destino = " + destino + ", Horario = " + horario + " Número do Voo = [ " + numeroVoo + " ]";
     }
 
     private Aviao disponibilidadeAviao(Aviao aeronave) throws Exception {
