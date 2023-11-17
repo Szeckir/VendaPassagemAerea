@@ -24,4 +24,5 @@ public class Aviao extends Aeronave{
         disponibilidade = true;
     }
 
+    
 }
