@@ -16,6 +16,5 @@ public class Main {
         Venda venda1 = new Venda(cliente1, voo1);
 
 
-        
     }
 }
