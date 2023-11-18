@@ -6,6 +6,32 @@ public class Venda {
     private Cliente cliente;
     private Voo voo;
     private static ArrayList<Venda> vendasRealizadas = new ArrayList<>();
+    private static ArrayList<Venda> vendasCanceladas= new ArrayList<>();
+
+    public void cancelarVenda(String cpf) {
+        Venda vendaParaCancelar = null;
+    
+        
+        for (Venda venda : vendasRealizadas) {
+            if (venda.cliente.getCpf().equals(cpf)) {
+                vendaParaCancelar = venda;
+                break; 
+            }
+        }
+    
+        if (vendaParaCancelar != null) {
+            vendasRealizadas.remove(vendaParaCancelar); 
+            vendasCanceladas.add(vendaParaCancelar);   
+            System.out.println("Venda cancelada com sucesso.");
+        } else {
+            System.out.println("Venda não encontrada para o CPF fornecido.");
+        }
+    }
+    
+    public static ArrayList<Venda> getVendasCanceladas(){
+        return vendasCanceladas;
+    }
+
 
     public static ArrayList<Venda> getVendasRealizadas() {
         return vendasRealizadas;

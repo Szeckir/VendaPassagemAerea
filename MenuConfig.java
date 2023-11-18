@@ -253,6 +253,14 @@ public class MenuConfig {
 
         for (int i = 0; i < Venda.getVendasRealizadas().size(); i++) {
             System.out.println(Venda.getVendasRealizadas().get(i));
+
+        }
+         if (Venda.getVendasCanceladas().isEmpty()) {
+            System.out.println("Nenhuma venda cancelada");
+            menuOpcoes();
+        }
+        for (int i = 0; i < Venda.getVendasCanceladas().size(); i++) {
+            
         }
         menuOpcoes();
     }
