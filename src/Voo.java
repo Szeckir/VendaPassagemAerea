@@ -47,7 +47,7 @@ public class Voo {
         this.origem = origem;
         this.destino = destino;
         this.horario = verificaHorario(horario);
-        this.aeronave = disponibilidadeAviao(aeronave);
+        this.aeronave = cadastroDisponibilidade(aeronave);
         assentosDisponiveis = aeronave.getQtdAssentos();
         numeroVoo = gerarNumeroVoo();
         voosDisponiveis.add(this);
@@ -83,25 +83,45 @@ public class Voo {
         return "VOO -> Origem = " + origem + ", Destino = " + destino + ", Horario = " + horario + " Número do Voo = [ " + numeroVoo + " ]";
     }
 
-    private Aviao disponibilidadeAviao(Aviao aeronave) {
-       
-            if (aeronave.isDisponibilidade() == false) {
-            System.out.println("Aviao Indisponivel");
-            for (int i = 0; i < 999; i++) {
-                System.out.println("Digite novamente:");
-                int codigoAviao = sc.nextInt();
-                if(codigoAviao == aeronave.getCodigoAviao()){
-                    Aviao novoAviao = null;
-                    for (int j = 0; j < Aviao.getAvioes().size() ;j++) {
-                        if(Aviao.getAvioes().get(i).getCodigoAviao() == codigoAviao && Aviao.getAvioes().get(i).isDisponibilidade()){
-                            novoAviao = Aviao.getAvioes().get(i);
-                            return novoAviao;
-                        }
-                    }
-                }
+    private boolean verificaDisponibilidadeAviao(Aviao aviao) {
+        if(aviao == null) {
+            return false;
+        }
+        if (aviao.isDisponibilidade() == true) {
+            return true;
+        }
+        return false;
+    }
+
+    private Aviao cadastroDisponibilidade(Aviao aeronave) {
+        if (Aviao.getAvioes().isEmpty()) {
+            return aeronave;
+        }
+        if (verificaDisponibilidadeAviao(aeronave) == true) {
+            return aeronave;
+        }
+
+        int novoNumero = 0;
+        Aviao novoAviao = null;
+
+        for(int i = 0; i < Aviao.getAvioes().size(); i++) {
+            if (Aviao.getAvioes().get(i).getCodigoAviao() == novoNumero) {
+                novoAviao = Aviao.getAvioes().get(i);
             }
         }
-        return aeronave;  
+
+        while (!verificaDisponibilidadeAviao(novoAviao)) {
+            System.out.println("Aviao Indisponivel");
+            System.out.println("Aeronave Indisponivel, digite um novo codigo de aviao: ");
+            novoNumero = sc.nextInt();
+
+             for(int i = 0; i < Aviao.getAvioes().size(); i++) {
+            if (Aviao.getAvioes().get(i).getCodigoAviao() == novoNumero) {
+                novoAviao = Aviao.getAvioes().get(i);
+            }
+        }
+        }
+        return novoAviao;
     }
 
     public void confirmarVoo() {
