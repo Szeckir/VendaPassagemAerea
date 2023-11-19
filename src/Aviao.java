@@ -36,4 +36,12 @@ public class Aviao extends Aeronave{
         avioes.add(this);
     }
 
+    @Override
+    public String toString() {
+        return "Aviao [codigoAviao=" + codigoAviao + ", nome=" + nome + ", qtdAssentos=" + qtdAssentos
+                + ", disponibilidade=" + disponibilidade +"]";
+    }
+
+    
+
 }

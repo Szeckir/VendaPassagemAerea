@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+
 public class Aeronave {
     protected static String modelo;
-
+    
     public Aeronave(String modelo) {
         this.modelo = modelo;
+       
     }
 
     public String getModelo() {
@@ -13,9 +16,10 @@ public class Aeronave {
         this.modelo = modelo;
     }
 
-    @Override
-    public String toString() {
-        return "Modelo [ " + modelo + " ]";
-    }
+  
+    
 
+
+    
 }
+

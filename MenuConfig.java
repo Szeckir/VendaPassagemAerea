@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuConfig {
@@ -98,11 +99,12 @@ public class MenuConfig {
         }
 
         System.out.println("Digite a origem do voo: ");
-        String origem = sc.next();
+        String origem = sc.nextLine();
+        sc.nextLine();
         System.out.println("Digite o destino do voo: ");
-        String destino = sc.next();
+        String destino = sc.nextLine();
         System.out.println("Digite o horário do voo: [HH:MM]");
-        String horario = sc.next();
+        String horario = sc.nextLine();
 
         new Voo(origem, destino, horario, aviao);
         System.out.println(" ");
@@ -141,7 +143,7 @@ public class MenuConfig {
                 comprarPassagem();
                 break;
             case 2:
-
+                cancelarVenda();
                 break;
             case 3:
                 menuOpcoes();
@@ -189,14 +191,14 @@ public class MenuConfig {
         String cpfCliente = sc.next();
 
         Voo voo = null;
-        for(int i = 0; i < Voo.getVoosDisponiveis().size(); i++) {
+        for (int i = 0; i < Voo.getVoosDisponiveis().size(); i++) {
             if (Voo.getVoosDisponiveis().get(i).getNumeroVoo().equals(numeroVoo)) {
                 voo = Voo.getVoosDisponiveis().get(i);
             }
         }
 
         Cliente cliente = null;
-        for(int i = 0; i < Cliente.getClientes().size(); i++) {
+        for (int i = 0; i < Cliente.getClientes().size(); i++) {
             if (Cliente.getClientes().get(i).getCpf().equals(cpfCliente)) {
                 cliente = Cliente.getClientes().get(i);
             }
@@ -207,13 +209,37 @@ public class MenuConfig {
             menuOpcoes();
         }
 
-        if(voo == null) {
+        if (voo == null) {
             System.out.println("Voo não existe. ");
             menuOpcoes();
         }
-        
+
         new Venda(cliente, voo);
         menuOpcoes();
+    }
+
+      public void cancelarVenda() throws Exception {
+        Cliente clienteProcurado = null;
+        
+        System.out.println("Digite o número do voo para cancelamento: ");
+        String numeroVoo = sc.next();
+        System.out.println("Digite seu CPF: ");
+        String cpf = sc.next();
+        
+
+        ArrayList<Venda> vendasRealizadas = Venda.getVendasRealizadas();
+        ArrayList<Venda> vendasCanceladas = Venda.getVendasCanceladas();
+
+        for (Venda venda : vendasRealizadas) {
+            if (venda.getVoo().getNumeroVoo().equals(numeroVoo) && venda.getCliente().getCpf().equals(cpf)) {
+                vendasRealizadas.remove(venda);
+                vendasCanceladas.add(venda);
+                System.out.println("Venda cancelada com sucesso.");
+                menuOpcoes();
+            }
+        }
+
+        System.out.println("Venda não encontrada.");
     }
 
     // ================================================== RELATORIOS
@@ -223,7 +249,8 @@ public class MenuConfig {
         System.out.println(" 1 - Relatório de Vendas");
         System.out.println(" 2 - Relatório de Todos Voos");
         System.out.println(" 3 - Relatório de Clientes");
-        System.out.println(" 4 - Voltar");
+        System.out.println(" 4 - Relatório Aviões");
+        System.out.println(" 5 - Voltar");
         int opcao = sc.nextInt();
 
         switch (opcao) {
@@ -237,8 +264,10 @@ public class MenuConfig {
                 relatorioClientes();
                 break;
             case 4:
-                menuOpcoes();
+                relatorioAvioes();
                 break;
+            case 5:
+            menuOpcoes();
             default:
                 break;
         }
@@ -255,12 +284,12 @@ public class MenuConfig {
             System.out.println(Venda.getVendasRealizadas().get(i));
 
         }
-         if (Venda.getVendasCanceladas().isEmpty()) {
+        if (Venda.getVendasCanceladas().isEmpty()) {
             System.out.println("Nenhuma venda cancelada");
             menuOpcoes();
         }
         for (int i = 0; i < Venda.getVendasCanceladas().size(); i++) {
-            
+            System.out.println(Venda.getVendasCanceladas() + " - CANCELADA");
         }
         menuOpcoes();
     }
@@ -297,9 +326,27 @@ public class MenuConfig {
         for (int i = 0; i < Cliente.getClientes().size(); i++) {
             System.out.println(Cliente.getClientes().get(i));
         }
+        
 
         System.out.println("=====================================");
         menuOpcoes();
     }
+
+     private void relatorioAvioes() throws Exception {
+        System.out.println("=====================================");
+        if (Aviao.getAvioes().isEmpty()) {
+            System.out.println("Nenhum avião cadastrado.");
+            menuOpcoes();
+        }
+
+        for (int i = 0; i < Aviao.getAvioes().size(); i++) {
+            System.out.println(Aviao.getAvioes().get(i));
+        }
+        
+
+        System.out.println("=====================================");
+        menuOpcoes();
+    }
+
 
 }

@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
+
 
 public class Voo {
     private String origem;
@@ -11,6 +13,7 @@ public class Voo {
     private int assentosDisponiveis;
     private static ArrayList<Voo> voosDisponiveis = new ArrayList<>();
     private static ArrayList<Voo> voosCancelados = new ArrayList<>();
+    Scanner sc = new Scanner(System.in);
 
     public static ArrayList<Voo> getVoosDisponiveis() {
         return voosDisponiveis;
@@ -41,6 +44,7 @@ public class Voo {
     }
 
     public Voo(String origem, String destino, String horario, Aviao aeronave) throws Exception {
+
         this.origem = origem;
         this.destino = destino;
         this.horario = verificaHorario(horario);
@@ -80,11 +84,27 @@ public class Voo {
         return "VOO -> Origem = " + origem + ", Destino = " + destino + ", Horario = " + horario + " Número do Voo = [ " + numeroVoo + " ]";
     }
 
-    private Aviao disponibilidadeAviao(Aviao aeronave) throws Exception {
-        if (aeronave.isDisponibilidade() == false) {
-            throw new Exception("Aviao Indisponivel");
-        } 
+    private Aviao disponibilidadeAviao(Aviao aeronave) {
+       
+            if (aeronave.isDisponibilidade() == false) {
+            System.out.println("Aviao Indisponivel");
+            for (int i = 0; i < 999; i++) {
+
+                System.out.println("Digite novamente:");
+                int codigoAviao = sc.nextInt();
+                if(codigoAviao == aeronave.getCodigoAviao()){
+                    Aviao novoAviao = null;
+                    for (int j = 0; j < Aviao.getAvioes().size() ;j++) {
+                        if(Aviao.getAvioes().get(i).getCodigoAviao() == codigoAviao && Aviao.getAvioes().get(i).isDisponibilidade()){
+                            novoAviao = Aviao.getAvioes().get(i);
+                            return novoAviao;
+                        }
+                    }
+                }
+            }
+        }
         return aeronave;
+          
     }
 
     public void confirmarVoo() {

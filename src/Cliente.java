@@ -22,7 +22,7 @@ public class Cliente {
         this.nome = nome;
         this.cpf = adicionarCPF(cpf);
         this.telefone = validarTelefone(telefone);
-        clientes.add(this);
+        
     }
 
     
