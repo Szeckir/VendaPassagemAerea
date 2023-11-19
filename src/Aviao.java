@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Aviao extends Aeronave{
+    private Scanner sc = new Scanner(System.in);
     private final int codigoAviao;
     private final String nome;
     private final int qtdAssentos;
@@ -29,11 +31,44 @@ public class Aviao extends Aeronave{
 
     public Aviao(int codigoAviao, String nome, int qtdAssentos, String modelo) {
         super(modelo);
-        this.codigoAviao = codigoAviao;
+        this.codigoAviao = cadastroCodAviao(codigoAviao);
         this.nome = nome;
         this.qtdAssentos = qtdAssentos;
         disponibilidade = true;
         avioes.add(this);
+    }
+
+    private boolean verificarCodigoAviao(int codigoAviao) {
+        for(int i = 0; i < avioes.size(); i++) {
+            if (avioes.get(i).codigoAviao == codigoAviao) {
+                return false;
+            }
+        }
+        return true;
+     }
+
+    private int cadastroCodAviao(int codigoAviao) {
+        if (avioes.isEmpty()) {
+            return codigoAviao;
+        } 
+        if(verificarCodigoAviao(codigoAviao) == true) {
+            return codigoAviao;
+        }
+        for(int i = 0; i < avioes.size(); i++) {
+            if(avioes.get(i).codigoAviao != codigoAviao) {
+            }
+        }
+
+        int novoNumero;
+        System.out.println("Digite um novo código: ");
+        novoNumero = sc.nextInt();
+
+        while (!verificarCodigoAviao(novoNumero)) {
+            System.out.println("Código do Avião Indisponivel");
+            System.out.println("Digite um novo código: ");
+            novoNumero = sc.nextInt();
+        }
+        return novoNumero;
     }
 
     @Override
@@ -41,7 +76,4 @@ public class Aviao extends Aeronave{
         return "Aviao [codigoAviao=" + codigoAviao + ", nome=" + nome + ", qtdAssentos=" + qtdAssentos
                 + ", disponibilidade=" + disponibilidade +"]";
     }
-
-    
-
 }

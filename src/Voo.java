@@ -89,7 +89,6 @@ public class Voo {
             if (aeronave.isDisponibilidade() == false) {
             System.out.println("Aviao Indisponivel");
             for (int i = 0; i < 999; i++) {
-
                 System.out.println("Digite novamente:");
                 int codigoAviao = sc.nextInt();
                 if(codigoAviao == aeronave.getCodigoAviao()){
