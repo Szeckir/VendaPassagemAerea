@@ -15,11 +15,5 @@ public class Aeronave {
     private void setModelo(String modelo) {
         this.modelo = modelo;
     }
-
-  
-    
-
-
-    
 }
 

@@ -99,12 +99,14 @@ public class MenuConfig {
         }
 
         System.out.println("Digite a origem do voo: ");
-        String origem = sc.nextLine();
+        String origem = sc.next();
         sc.nextLine();
+
         System.out.println("Digite o destino do voo: ");
         String destino = sc.nextLine();
+
         System.out.println("Digite o horário do voo: [HH:MM]");
-        String horario = sc.nextLine();
+        String horario = sc.next();
 
         new Voo(origem, destino, horario, aviao);
         System.out.println(" ");

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Aviao extends Aeronave{
+public class Aviao extends Aeronave {
     private Scanner sc = new Scanner(System.in);
     private final int codigoAviao;
     private final String nome;
@@ -39,23 +39,23 @@ public class Aviao extends Aeronave{
     }
 
     private boolean verificarCodigoAviao(int codigoAviao) {
-        for(int i = 0; i < avioes.size(); i++) {
+        for (int i = 0; i < avioes.size(); i++) {
             if (avioes.get(i).codigoAviao == codigoAviao) {
                 return false;
             }
         }
         return true;
-     }
+    }
 
     private int cadastroCodAviao(int codigoAviao) {
         if (avioes.isEmpty()) {
             return codigoAviao;
-        } 
-        if(verificarCodigoAviao(codigoAviao) == true) {
+        }
+        if (verificarCodigoAviao(codigoAviao) == true) {
             return codigoAviao;
         }
-        for(int i = 0; i < avioes.size(); i++) {
-            if(avioes.get(i).codigoAviao != codigoAviao) {
+        for (int i = 0; i < avioes.size(); i++) {
+            if (avioes.get(i).codigoAviao != codigoAviao) {
             }
         }
 
@@ -74,6 +74,6 @@ public class Aviao extends Aeronave{
     @Override
     public String toString() {
         return "Aviao [codigoAviao=" + codigoAviao + ", nome=" + nome + ", qtdAssentos=" + qtdAssentos
-                + ", disponibilidade=" + disponibilidade +"]";
+                + ", disponibilidade=" + disponibilidade + "]";
     }
 }

@@ -44,7 +44,6 @@ public class Voo {
     }
 
     public Voo(String origem, String destino, String horario, Aviao aeronave) throws Exception {
-
         this.origem = origem;
         this.destino = destino;
         this.horario = verificaHorario(horario);
@@ -102,8 +101,7 @@ public class Voo {
                 }
             }
         }
-        return aeronave;
-          
+        return aeronave;  
     }
 
     public void confirmarVoo() {
@@ -117,7 +115,6 @@ public class Voo {
     }
 
     public void cancelarVoo(String numeroVoo) {
-
         for(int i = 0; i < voosDisponiveis.size(); i++) {
             if (voosDisponiveis.get(i).numeroVoo == numeroVoo) {
                 voosCancelados.add(voosDisponiveis.get(i));
@@ -126,14 +123,11 @@ public class Voo {
                 return;
             }
         }
-
         System.out.println("O voo não existe");
     }
 
     private boolean verificaHorarioAux(String time) {
-
         String regex = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
-
 
         return time.matches(regex);
     }
