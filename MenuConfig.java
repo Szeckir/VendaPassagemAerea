@@ -9,12 +9,12 @@ public class MenuConfig {
     }
 
     // =============================== MENU OPCOES
-    public void menuOpcoes() throws Exception {
+    private void menuOpcoes() throws Exception {
         System.out.println("Seja Bem-Vindo ao Sistema de Venda de Passagens Aéreas");
         System.out.println("");
         System.out.println("Escolha uma das opções abaixo: ");
         System.out.println(" 1 - Parâmetros do sistema");
-        System.out.println(" 2 - Venda de Passagens");
+        System.out.println(" 2 - Parâmetros do cliente");
         System.out.println(" 3 - Relatórios");
         System.out.println(" 4 - Sair");
 
@@ -26,7 +26,7 @@ public class MenuConfig {
                 parametrosSistema();
                 break;
             case 2:
-                vendaPassagens();
+                parametrosCliente();
                 break;
 
             case 3:
@@ -45,7 +45,8 @@ public class MenuConfig {
         System.out.println(" 1 - Cadastrar Avião");
         System.out.println(" 2 - Cadastrar Voo");
         System.out.println(" 3 - Cadastrar Cliente");
-        System.out.println(" 4 - Voltar");
+        System.out.println(" 4 - Confirmar Voo");
+        System.out.println(" 5 - Voltar");
         System.out.println("===========================================");
         int opcao = sc.nextInt();
 
@@ -60,6 +61,9 @@ public class MenuConfig {
                 cadastroCliente();
                 break;
             case 4:
+                menuConfirmarVoo();
+                break;
+            case 5:
                 menuOpcoes();
                 break;
             default:
@@ -115,23 +119,85 @@ public class MenuConfig {
         menuOpcoes();
     }
 
-    public void cadastroCliente() throws Exception {
+    private void cadastroCliente() throws Exception {
         System.out.println("========== Cadastro de Cliente ==========");
         System.out.println("Digite o nome do cliente: ");
         String nome = sc.next();
+
         System.out.println("Digite o CPF do cliente: ");
         String cpf = sc.next();
+
         System.out.println("Digite o telefone do cliente: ");
-        String telefone = sc.next();
+        String telefone = sc.nextLine();
 
         new Cliente(nome, cpf, telefone);
         System.out.println("Cliente cadastrado com sucesso!");
         menuOpcoes();
     }
 
-    // =============================== VENDA DE PASSAGENS
+    private void menuConfirmarVoo() throws Exception {
+        System.out.println("========================================");
+        System.out.println(" 1 - Listar Voos Não confirmados");
+        System.out.println(" 2 - Confirmar Voo");
+        System.out.println("========================================");
+        int opcao = sc.nextInt();
 
-    public void vendaPassagens() throws Exception {
+        switch (opcao) {
+            case 1:
+                ListarVoosNãoConfirmados();
+                break;
+            case 2:
+                confirmarVoo();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void ListarVoosNãoConfirmados() throws Exception {
+        for (int i = 0; i < Voo.getVoosDisponiveis().size(); i++) {
+            if (Voo.getVoosDisponiveis().get(i).getAeronave().isDisponibilidade() == true) {
+                System.out.println(Voo.getVoosDisponiveis().get(i));
+            }
+        }
+        menuConfirmarVoo();
+    }
+
+    private void confirmarVoo() throws Exception {
+        System.out.println("Digite o número do voo que deseja confirmar: ");
+        String numeroVoo = sc.next();
+
+        if(confirmarExistenciaVoo(numeroVoo) == true) {
+            for(int i = 0; i < Voo.getVoosDisponiveis().size(); i++) {
+                if(Voo.getVoosDisponiveis().get(i).getNumeroVoo().equals(numeroVoo)) {
+                    Voo.getVoosDisponiveis().get(i).getAeronave().setDisponibilidade(false);
+                    System.out.println("Voo confirmado: " + Voo.getVoosDisponiveis().get(i).getNumeroVoo());
+                    menuOpcoes();
+                }
+            }
+        }
+
+        while(!confirmarExistenciaVoo(numeroVoo)) {
+            System.out.println("VOO não encontrado");
+            System.out.println("Digite novamente: ");
+            numeroVoo = sc.nextLine();
+        }   
+    }
+
+    
+    private boolean confirmarExistenciaVoo(String numeroVoo) {
+        for (int i = 0; i < Voo.getVoosDisponiveis().size(); i++) {
+            if(Voo.getVoosDisponiveis().get(i).getNumeroVoo().equals(numeroVoo)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // =============================== Parametros do Cliente
+
+    private void parametrosCliente() throws Exception {
         System.out.println("========== Venda de Passagens ==========");
         System.out.println("Escolha uma das opções abaixo: ");
         System.out.println(" 1 - Comprar Passagem");
@@ -155,7 +221,7 @@ public class MenuConfig {
         }
     }
 
-    public void comprarPassagem() throws Exception {
+    private void comprarPassagem() throws Exception {
         System.out.println("========== Comprar Passagem ==========");
         System.out.println("1 - Listar Voos");
         System.out.println("2 - Comprar Passagem");
@@ -177,7 +243,7 @@ public class MenuConfig {
         }
     }
 
-    public void finalizarCompra() throws Exception {
+    private void finalizarCompra() throws Exception {
 
         if (Voo.getVoosDisponiveis().isEmpty()) {
             System.out.println("Não foi possivel, nenhum voo disponível.");
@@ -220,14 +286,13 @@ public class MenuConfig {
         menuOpcoes();
     }
 
-      public void cancelarVenda() throws Exception {
+    private void cancelarVenda() throws Exception {
         Cliente clienteProcurado = null;
-        
+
         System.out.println("Digite o número do voo para cancelamento: ");
         String numeroVoo = sc.next();
         System.out.println("Digite seu CPF: ");
         String cpf = sc.next();
-        
 
         ArrayList<Venda> vendasRealizadas = Venda.getVendasRealizadas();
         ArrayList<Venda> vendasCanceladas = Venda.getVendasCanceladas();
@@ -269,7 +334,7 @@ public class MenuConfig {
                 relatorioAvioes();
                 break;
             case 5:
-            menuOpcoes();
+                menuOpcoes();
             default:
                 break;
         }
@@ -328,13 +393,12 @@ public class MenuConfig {
         for (int i = 0; i < Cliente.getClientes().size(); i++) {
             System.out.println(Cliente.getClientes().get(i));
         }
-        
 
         System.out.println("=====================================");
         menuOpcoes();
     }
 
-     private void relatorioAvioes() throws Exception {
+    private void relatorioAvioes() throws Exception {
         System.out.println("=====================================");
         if (Aviao.getAvioes().isEmpty()) {
             System.out.println("Nenhum avião cadastrado.");
@@ -344,11 +408,9 @@ public class MenuConfig {
         for (int i = 0; i < Aviao.getAvioes().size(); i++) {
             System.out.println(Aviao.getAvioes().get(i));
         }
-        
 
         System.out.println("=====================================");
         menuOpcoes();
     }
-
 
 }
