@@ -46,7 +46,9 @@ public class MenuConfig {
         System.out.println(" 2 - Cadastrar Voo");
         System.out.println(" 3 - Cadastrar Cliente");
         System.out.println(" 4 - Confirmar Voo");
-        System.out.println(" 5 - Voltar");
+        System.out.println(" 5 - Desconfirmar VOO");
+        System.out.println(" 7 - Cancelar VOO");
+        System.out.println(" 6 - Voltar");
         System.out.println("===========================================");
         int opcao = sc.nextInt();
 
@@ -64,6 +66,9 @@ public class MenuConfig {
                 menuConfirmarVoo();
                 break;
             case 5:
+                menuDesconfirmarVoo();
+                break;
+            case 6:
                 menuOpcoes();
                 break;
             default:
@@ -194,6 +199,55 @@ public class MenuConfig {
             }
         }
         return false;
+    }
+
+    private void menuDesconfirmarVoo() throws Exception {
+        System.out.println("========================================");
+        System.out.println(" 1 - Listar Voos confirmados");
+        System.out.println(" 2 - Desconfirmar Voo");
+        System.out.println("========================================");
+        int opcao = sc.nextInt();
+
+        switch (opcao) {
+            case 1:
+                ListarVoosConfirmados();
+                break;
+            case 2:
+                desconfirmarVOO();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void ListarVoosConfirmados() throws Exception {
+        for (int i = 0; i < Voo.getVoosDisponiveis().size(); i++) {
+            if (Voo.getVoosDisponiveis().get(i).getAeronave().isDisponibilidade() == false) {
+                System.out.println(Voo.getVoosDisponiveis().get(i));
+            }
+        }
+        menuDesconfirmarVoo();
+    }
+
+    private void desconfirmarVOO() throws Exception {
+        System.out.println("Digite o número do voo que deseja desconfirmar: ");
+        String numeroVoo = sc.next();
+
+        if(confirmarExistenciaVoo(numeroVoo) == true) {
+            for(int i = 0; i < Voo.getVoosDisponiveis().size(); i++) {
+                if(Voo.getVoosDisponiveis().get(i).getNumeroVoo().equals(numeroVoo)) {
+                    Voo.getVoosDisponiveis().get(i).getAeronave().setDisponibilidade(true);
+                    System.out.println("Voo cancelado: " + Voo.getVoosDisponiveis().get(i).getNumeroVoo());
+                    menuOpcoes();
+                }
+            }
+        }
+        while(!confirmarExistenciaVoo(numeroVoo)) {
+            System.out.println("VOO não encontrado");
+            System.out.println("Digite novamente: ");
+            numeroVoo = sc.nextLine();
+        }
     }
 
     // =============================== Parametros do Cliente
