@@ -8,22 +8,17 @@ public class Venda {
     private static ArrayList<Venda> vendasRealizadas = new ArrayList<>();
     private static ArrayList<Venda> vendasCanceladas= new ArrayList<>();
 
-    
-    
     public static ArrayList<Venda> getVendasCanceladas(){
         return vendasCanceladas;
     }
-
 
     public Cliente getCliente() {
         return cliente;
     }
 
-
     public Voo getVoo() {
         return voo;
     }
-
 
     public static ArrayList<Venda> getVendasRealizadas() {
         return vendasRealizadas;

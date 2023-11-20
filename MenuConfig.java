@@ -123,9 +123,10 @@ public class MenuConfig {
         System.out.println("========== Cadastro de Cliente ==========");
         System.out.println("Digite o nome do cliente: ");
         String nome = sc.next();
+        sc.nextLine();
 
         System.out.println("Digite o CPF do cliente: ");
-        String cpf = sc.next();
+        String cpf = sc.nextLine();
 
         System.out.println("Digite o telefone do cliente: ");
         String telefone = sc.nextLine();
@@ -287,8 +288,6 @@ public class MenuConfig {
     }
 
     private void cancelarVenda() throws Exception {
-        Cliente clienteProcurado = null;
-
         System.out.println("Digite o número do voo para cancelamento: ");
         String numeroVoo = sc.next();
         System.out.println("Digite seu CPF: ");
@@ -368,6 +367,7 @@ public class MenuConfig {
             menuOpcoes();
         }
 
+        System.out.println(" ====== VOOS DISPONIVEIS ====== ");
         for (int i = 0; i < Voo.getVoosDisponiveis().size(); i++) {
             if (Voo.getVoosDisponiveis().get(i).getAeronave().isDisponibilidade() == false) {
                 System.out.println(Voo.getVoosDisponiveis().get(i) + " - CONFIRMADO");
@@ -376,6 +376,13 @@ public class MenuConfig {
             }
         }
 
+        if(Voo.getVoosCancelados().isEmpty()) {
+            System.out.println("Nenhum VOO cancelado.");
+            menuOpcoes();
+        }
+
+        System.out.println("");
+        System.out.println(" ====== VOOS CANCELADOS ====== ");
         for (int i = 0; i < Voo.getVoosCancelados().size(); i++) {
             System.out.println(Voo.getVoosCancelados().get(i) + " - CANCELADO");
         }

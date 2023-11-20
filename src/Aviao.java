@@ -27,7 +27,7 @@ public class Aviao extends Aeronave {
 
     public void setDisponibilidade(boolean disponibilidade) {
         this.disponibilidade = disponibilidade;
-    }
+    } 
 
     public Aviao(int codigoAviao, String nome, int qtdAssentos, String modelo) {
         super(modelo);
@@ -73,7 +73,7 @@ public class Aviao extends Aeronave {
 
     @Override
     public String toString() {
-        return "Aviao [codigoAviao=" + codigoAviao + ", nome=" + nome + ", qtdAssentos=" + qtdAssentos
-                + ", disponibilidade=" + disponibilidade + "]";
+        return "Aviao [Codigo Aviao = " + codigoAviao + ", Nome Aviao = " + nome + ", Quantidade Assentos = " + qtdAssentos
+                + ", Avião disponivel = " + disponibilidade + "]";
     }
 }
