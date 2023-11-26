@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuConfig {
@@ -9,72 +10,99 @@ public class MenuConfig {
     }
 
     // =============================== MENU OPCOES
-    private void menuOpcoes() throws Exception {
-        System.out.println("Seja Bem-Vindo ao Sistema de Venda de Passagens Aéreas");
-        System.out.println("");
-        System.out.println("Escolha uma das opções abaixo: ");
-        System.out.println(" 1 - Parâmetros do sistema");
-        System.out.println(" 2 - Parâmetros do cliente");
-        System.out.println(" 3 - Relatórios");
-        System.out.println(" 4 - Sair");
-
-        // crie o laco case para as opcoes abaixo
-        int opcao = sc.nextInt();
-
-        switch (opcao) {
-            case 1:
-                parametrosSistema();
-                break;
-            case 2:
-                parametrosCliente();
-                break;
-
-            case 3:
-                relatorios();
-                break;
-            default:
-                break;
+    private void menuOpcoes() {
+        boolean continuar = true;
+    
+        while (continuar) {
+            System.out.println("Seja Bem-Vindo ao Sistema de Venda de Passagens Aéreas");
+            System.out.println("");
+            System.out.println("Escolha uma das opções abaixo: ");
+            System.out.println(" 1 - Parâmetros do sistema");
+            System.out.println(" 2 - Parâmetros do cliente");
+            System.out.println(" 3 - Relatórios");
+            System.out.println(" 4 - Sair");
+    
+            int opcao = sc.nextInt();
+    
+            switch (opcao) {
+                case 1:
+                    try {
+                        parametrosSistema();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Ocorreu um erro ao ajustar os parâmetros do sistema.");
+                    }
+                    break;
+                case 2:
+                    try {
+                        parametrosCliente();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Ocorreu um erro ao ajustar os parâmetros do cliente.");
+                    }
+                    break;
+                case 3:
+                    try {
+                        relatorios();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Ocorreu um erro ao gerar relatórios.");
+                    }
+                    break;
+                case 4:
+                    continuar = false;
+                    System.out.println("Saindo do sistema...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+            }
         }
-
     }
-
+    
     // =============================== PARAMETROS SISTEMA
     private void parametrosSistema() throws Exception {
-        System.out.println("========== Parâmetros do Sistema ==========");
-        System.out.println("Escolha uma das opções abaixo: ");
-        System.out.println(" 1 - Cadastrar Avião");
-        System.out.println(" 2 - Cadastrar Voo");
-        System.out.println(" 3 - Cadastrar Cliente");
-        System.out.println(" 4 - Confirmar Voo");
-        System.out.println(" 5 - Desconfirmar VOO");
-        System.out.println(" 7 - Cancelar VOO");
-        System.out.println(" 6 - Voltar");
-        System.out.println("===========================================");
-        int opcao = sc.nextInt();
-
-        switch (opcao) {
-            case 1:
-                cadastroAviao();
-                break;
-            case 2:
-                cadastrarVoo();
-                break;
-            case 3:
-                cadastroCliente();
-                break;
-            case 4:
-                menuConfirmarVoo();
-                break;
-            case 5:
-                menuDesconfirmarVoo();
-                break;
-            case 6:
-                menuOpcoes();
-                break;
-            default:
-                break;
+        boolean continuar = true;
+    
+        while (continuar) {
+            System.out.println("========== Parâmetros do Sistema ==========");
+            System.out.println("Escolha uma das opções abaixo: ");
+            System.out.println(" 1 - Cadastrar Avião");
+            System.out.println(" 2 - Cadastrar Voo");
+            System.out.println(" 3 - Cadastrar Cliente");
+            System.out.println(" 4 - Confirmar Voo");
+            System.out.println(" 5 - Desconfirmar VOO");
+            System.out.println(" 7 - Cancelar VOO");
+            System.out.println(" 6 - Voltar");
+            System.out.println("===========================================");
+            int opcao = sc.nextInt();
+    
+            switch (opcao) {
+                case 1:
+                    cadastroAviao();
+                    break;
+                case 2:
+                    cadastrarVoo();
+                    break;
+                case 3:
+                    cadastroCliente();
+                    break;
+                case 4:
+                    menuConfirmarVoo();
+                    break;
+                case 5:
+                    menuDesconfirmarVoo();
+                    break;
+                case 6:
+                    continuar = false;
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+            }
         }
     }
+    
 
     private void cadastroAviao() throws Exception {
         System.out.println("Digite o código do avião: ");
@@ -91,8 +119,9 @@ public class MenuConfig {
         menuOpcoes();
     }
 
-    private void cadastrarVoo() throws Exception {
-        System.out.println("========== Cadastro de Voo ==========");
+    private void cadastrarVoo() {
+    System.out.println("========== Cadastro de Voo ==========");
+    try {
         System.out.println("Digite o código do avião: ");
         int numeroAviao = sc.nextInt();
         Aviao aviao = null;
@@ -104,7 +133,7 @@ public class MenuConfig {
         }
         if (aviao == null) {
             System.out.println("Avião não encontrado");
-            menuOpcoes();
+            return;
         }
 
         System.out.println("Digite a origem do voo: ");
@@ -118,27 +147,71 @@ public class MenuConfig {
         String horario = sc.next();
 
         new Voo(origem, destino, horario, aviao);
-        System.out.println(" ");
         System.out.println("Voo cadastrado com sucesso!");
+
+    } catch (InputMismatchException ime) {
+        System.out.println("Erro de entrada. Por favor, insira os dados corretamente.");
+        sc.nextLine(); 
+    } catch (Exception e) {
+        System.out.println("Ocorreu um erro ao cadastrar o voo: " + e.getMessage());
+    } finally {
         System.out.println("====================================");
         menuOpcoes();
     }
+}
 
-    private void cadastroCliente() throws Exception {
-        System.out.println("========== Cadastro de Cliente ==========");
-        System.out.println("Digite o nome do cliente: ");
-        String nome = sc.next();
-        sc.nextLine();
 
-        System.out.println("Digite o CPF do cliente: ");
-        String cpf = sc.nextLine();
+private void cadastroCliente() throws Exception {
+    
+    System.out.println("========== Cadastro de Cliente ==========");
+    
+    System.out.println("Digite o nome do cliente: ");
+    String nome = sc.next();
+    
+   
+    while (contemNumeros(nome)) {
+        System.out.println("Nome inválido. Por favor, digite um nome sem números: ");
+        nome = sc.next(); 
+    }
+    sc.nextLine(); 
 
-        System.out.println("Digite o telefone do cliente: ");
-        String telefone = sc.nextLine();
+    System.out.println("Digite o CPF do cliente: ");
+    String cpf = sc.nextLine();
 
-        new Cliente(nome, cpf, telefone);
-        System.out.println("Cliente cadastrado com sucesso!");
-        menuOpcoes();
+    
+    while (contemLetras(cpf)==false) {
+        System.out.println("CPF inválido. Por favor, digite um CPF somente com números: ");
+        cpf = sc.nextLine();
+    }
+
+    System.out.println("Digite o telefone do cliente: ");
+    String telefone = sc.nextLine();
+
+   
+    while (contemLetras(telefone)==false) {
+        System.out.println("Telefone inválido. Por favor, digite um telefone somente com números: ");
+        telefone = sc.nextLine();
+    }
+
+    new Cliente(nome, cpf, telefone);
+    System.out.println("Cliente cadastrado com sucesso!");
+    menuOpcoes();
+}
+    private static boolean contemNumeros(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private static boolean contemLetras(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void menuConfirmarVoo() throws Exception {
