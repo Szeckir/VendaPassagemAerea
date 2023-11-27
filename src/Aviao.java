@@ -9,6 +9,7 @@ public class Aviao extends Aeronave {
     private boolean disponibilidade = true;
     private static ArrayList<Aviao> avioes = new ArrayList<>();
 
+    // GETTERS:
     public static ArrayList<Aviao> getAvioes() {
         return avioes;
     }
@@ -25,10 +26,12 @@ public class Aviao extends Aeronave {
         return disponibilidade;
     }
 
+    // SETTER
     public void setDisponibilidade(boolean disponibilidade) {
         this.disponibilidade = disponibilidade;
     } 
 
+    // VERIFICACOES:
     public Aviao(int codigoAviao, String nome, int qtdAssentos, String modelo) {
         super(modelo);
         this.codigoAviao = cadastroCodAviao(codigoAviao);

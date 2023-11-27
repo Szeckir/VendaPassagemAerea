@@ -16,4 +16,3 @@ public class Aeronave {
         this.modelo = modelo;
     }
 }
-

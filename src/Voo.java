@@ -3,7 +3,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-
 public class Voo {
     private String origem;
     private String destino;
@@ -147,17 +146,30 @@ public class Voo {
     }
 
     private boolean verificaHorarioAux(String time) {
-        String regex = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
-
-        return time.matches(regex);
+        if (time.length() == 5 && time.charAt(2) == ':') {
+            return true;
+        }
+        return false;
     }
 
     private String verificaHorario (String time){
         if(verificaHorarioAux(time) == false){
-            //return; //fazer uma exception
-
+            System.out.println("Hoário incorreto, digite novamente: [HH:MM]");
+            time = sc.nextLine();
+            try {
+                while (!verificaHorarioAux(time)) {
+                    System.out.println("Hoário incorreto, digite novamente: [HH:MM]");
+                    time = sc.nextLine();
+                }
+                return time;
+            } catch (Exception e) {
+                System.out.println("Horario Incorreto: " + e.getMessage());
+            }
         }
-        return time;
+        if(verificaHorarioAux(time) == true) {
+            return time;
+        }
+        return null;
     }
 
 }
