@@ -1,9 +1,6 @@
 package actions;
-
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import javax.swing.Action;
 import entities.Aviao;
 import entities.Cliente;
 import entities.Venda;
@@ -40,11 +37,9 @@ public class Aeroporto {
         return clientes;
     }
 
-   private void menu() {
-    Scanner sc = new Scanner(System.in);
-    boolean continuar = true;
-    while (continuar) {
-        try {
+    private void menu() throws Exception {
+        boolean continuar = true;
+        while (continuar) {
             System.out.println("Seja Bem-Vindo ao Aeroporto Internacional");
             System.out.println("");
             System.out.println("Escolha uma das opções abaixo: ");
@@ -54,15 +49,12 @@ public class Aeroporto {
             System.out.println(" 4 - Relatórios");
             System.out.println(" 5 - Sair");
 
-            int opcao = sc.nextInt();
-            switch (opcao) {
+            switch (sc.nextInt()) {
                 case 1:
                     menuParametrosSistema();
                     break;
 
                 case 2:
-                menuCliente();
-                    
                     break;
 
                 case 3:
@@ -74,29 +66,25 @@ public class Aeroporto {
                     break;
 
                 default:
-                    System.out.println("Certeza que deseja sair? (S/N)");
-                    String resposta = sc.next();
-                    if (resposta.equalsIgnoreCase("S")) {
-                        continuar = false;
-                    } else {
-                        System.out.println("Voltando ao menu principal...");
+                    try {
+                        System.out.println("Certeza que deseja sair? (S/N)");
+                        String resposta = sc.next();
+                        if (resposta.equalsIgnoreCase("S")) {
+                            continuar = false;
+                        } else {
+                            System.out.println("Voltando ao menu principal...");
+                            menu();
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Opção inválida");
                     }
                     break;
             }
-        } catch (InputMismatchException e) {
-            System.out.println("Erro: entrada inválida. Por favor, insira um número.");
-            sc.nextLine(); 
-        } catch (Exception e) {
-            System.out.println("Ocorreu um erro: " + e.getMessage());
+
         }
     }
-}
 
-
-private void menuParametrosSistema() {
-    boolean continuar = true;
-
-    while (continuar) {
+    private void menuParametrosSistema() throws Exception {
         System.out.println("=========== MENU DE PARÂMETROS DO SISTEMA ===========");
         System.out.println("Escolha uma das opções abaixo: ");
         System.out.println(" 1 - Cadastrar Avião");
@@ -104,37 +92,29 @@ private void menuParametrosSistema() {
         System.out.println(" 3 - Cadastrar Cliente");
         System.out.println(" 4 - Voltar");
 
-        try {
-            int escolha = sc.nextInt();
-
-            switch (escolha) {
-                case 1:
-                    cadastrarAviao();
-                    break;
-                case 2:
-                    cadastrarVoo();
-                    break;
-                case 3:
-                    cadastrarCliente();
-                    break;
-                case 4:
-                    menu();
-                    continuar = false; // Sai do loop
-                    break;
-                default:
-                    System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
-                    break;
-            }
-        } catch (InputMismatchException ime) {
-            System.out.println("Entrada inválida. Por favor, digite um número.");
-            sc.nextLine(); // Limpa o buffer do scanner
-        } catch (Exception e) {
-            System.out.println("Ocorreu um erro: " + e.getMessage());
-            e.printStackTrace(); // Para propósitos de depuração
+        switch (sc.nextInt()) {
+            case 1:
+                cadastrarAviao();
+                break;
+            case 2:
+                cadastrarVoo();
+                break;
+            case 3:
+                cadastrarCliente();
+                break;
+            case 4:
+                menu();
+                break;
+            default:
+                try {
+                    throw new Exception();
+                } catch (Exception e) {
+                    System.out.println("Opção inválida");
+                    menuParametrosSistema();
+                }
+                break;
         }
     }
-}
-
 
     private void cadastrarAviao() throws Exception {
 
@@ -218,10 +198,7 @@ private void menuParametrosSistema() {
     }
     
 
-   public void menuParametrosVoos() {
-    boolean continuar = true;
-
-    while (continuar) {
+    public void menuParametrosVoos() {
         System.out.println("=========== MENU DE VOOS ===========");
         System.out.println(" 1 - Cancelar VOO");
         System.out.println(" 2 - Confirmar VOO");
@@ -229,29 +206,30 @@ private void menuParametrosSistema() {
         System.out.println(" 4 - Listar VOOS");
         System.out.println(" 5 - Voltar");
 
-        try {
-            int escolha = sc.nextInt();
-
-            switch (escolha) {
-                case 1:
-                    cancelarVoo();
-                    break;
-                case 2:
-                    confirmarVoo();
-                    break;
-                case 3:
-                    desconfirmarVoo();
-                    break;
-                case 4:
+        switch (sc.nextInt()) {
+            case 1:
+                cancelarVoo();
+                break;
+            case 2:
+                confirmarVoo();
+                break;
+            case 3:
+                desconfirmarVoo();
+                break;
+            case 4:
+                try {
                     if (voos.isEmpty()) {
-                        System.out.println("Não há voos cadastrados");
-                    } else {
-                        listarVoos();
+                        throw new Exception();
                     }
-                    break;
-                case 5:
+                    listarVoos();
+                } catch (Exception e) {
+                    System.out.println("Não há voos cadastrados");
+                }
+                break;
+            case 5:
+                try {
                     menu();
-                    continuar = false; 
+                    continuar = false; // Sai do loop
                     break;
                 default:
                     System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
@@ -259,14 +237,12 @@ private void menuParametrosSistema() {
             }
         } catch (InputMismatchException ime) {
             System.out.println("Entrada inválida. Por favor, digite um número.");
-            sc.nextLine(); 
+            sc.nextLine(); // Limpa o buffer do scanner
         } catch (Exception e) {
-            
-            e.printStackTrace(); 
+            System.out.println("Ocorreu um erro: " + e.getMessage());
+            e.printStackTrace(); // Para propósitos de depuração
         }
     }
-}
-
 
     private void cancelarVoo() {
         System.out.println("Digite o código do voo: ");
@@ -359,7 +335,7 @@ private void menuParametrosSistema() {
                         if (voos.isEmpty()) {
                             System.out.println("Não há vendas cadastradas");
                         } else {
-                            listarTodasVendas();
+                            listarVendas();
                         }
                         break;
                     case 4:
@@ -383,23 +359,6 @@ private void menuParametrosSistema() {
             }
         }
     }
-
-    private void listarTodasVendas() {
-        if(vendasAtivas.isEmpty()){
-            System.out.println("Não possui vendas ativas");
-            return;
-        }
-        for (int i = 0; i < vendasAtivas.size(); i++) {
-            System.out.println(vendasAtivas.get(i).toString() + " - VENDA ATIVA");
-        }
-        if(vendasCanceladas.isEmpty()){
-            System.out.println("Não possui vendas canceladas");
-            return;
-        }
-        for(int i = 0; i < vendasCanceladas.size(); i++) {
-            System.out.println(vendasCanceladas.get(i).toString() + " - VENDA CANCELADA");
-        }
-    }
     
 
     private void listarAvioes() {
@@ -414,50 +373,46 @@ private void menuParametrosSistema() {
         }
     }
 
-    private void listarVendas() {
-        for (int i = 0; i < voos.size(); i++) {
-            System.out.println(voos.get(i).toString());
+    private void lsitarTodasVendas() {
+        for (int i = 0; i < vendasAtivas.size(); i++) {
+            System.out.println(vendasAtivas.get(i).toString() + " - VENDA ATIVA");
+        }
+
+        for(int i = 0; i < vendasCanceladas.size(); i++) {
+            System.out.println(vendasCanceladas.get(i).toString() + " - VENDA CANCELADA");
         }
     }
 
     private void menuCliente() {
-        boolean continuar = true;
-    
-        while (continuar) {
-            System.out.println("=========== MENU DE CLIENTES ===========");
-            System.out.println(" 1 - Comprar Passagem");
-            System.out.println(" 2 - Cancelar Passagem");
-            System.out.println(" 3 - Listar Voos");
-            System.out.println(" 4 - Voltar");
-    
-            try {
-                int escolha = sc.nextInt();
-    
-                switch (escolha) {
-                    case 1:
-                        comprarPassagem();
-                        break;
-                    case 2:
-                        cancelarPassagem();
-                        break;
-                    case 3:
-                        listarVoos();
-                        break;
-                    case 4:
-                        menu();
-                        continuar = false; // Sai do loop
-                        break;
-                    default:
-                        System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
-                        break;
+        System.out.println("=========== MENU DE CLIENTES ===========");
+        System.out.println(" 1 - Comprar Passagem");
+        System.out.println(" 2 - Cancelar Passagem");
+        System.out.println(" 3 - Listar Voos");
+        System.out.println(" 4 - Voltar");
+
+        switch (sc.nextInt()) {
+            case 1:
+                comprarPassagem();
+                break;
+            case 2:
+                cancelarPassagem();
+                break;
+            case 3:
+                listarVoos();
+                break;
+            case 4:
+                try {
+                    menu();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
-            } catch (InputMismatchException ime) {
-                System.out.println("Entrada inválida. Por favor, digite um número.");
-                sc.nextLine(); // Limpa o buffer do scanner
-            }
+                break;
+            default:
+                System.out.println("Opção inválida");
+                menuCliente();
+                break;
         }
     }
-    
 
     private void comprarPassagem() {
         System.out.println("Digite o código do voo: ");
