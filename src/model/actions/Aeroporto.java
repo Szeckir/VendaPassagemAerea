@@ -138,30 +138,30 @@ private void menuParametrosSistema() {
 
     private void cadastrarAviao() throws Exception {
 
-        System.out.println("Digite o código do avião: ");
-        int codigoAviao = sc.nextInt();
-        if (verificarCodigoAviao(codigoAviao) == false) {
-            System.out.println("Código inválido");
-            menuParametrosSistema();
-        }
-
-        System.out.println("Digite o nome do Aviao: ");
-        String nome = sc.next();
-        if (validarNome(nome) == false) {
-            System.out.println("Nome inválido");
-            menuParametrosSistema();
-        }
-
-        System.out.println("Digite a quantidade de assentos: ");
-        int qtdAssentos = sc.nextInt();
-        if (auxiliarQtdAssentos(qtdAssentos) == false) {
-            System.out.println("Quantidade de assentos inválido");
-            menuParametrosSistema();
-        }
-
-        avioes.add(new Aviao(codigoAviao, nome, qtdAssentos));
-        System.out.println("Avião cadastrado com sucesso!");
+    System.out.println("Digite o código do avião: ");
+    int codigoAviao = sc.nextInt();
+    sc.nextLine(); // Adiciona isto para consumir a quebra de linha após o número
+    if (verificarCodigoAviao(codigoAviao) == false) {
+        System.out.println("Código inválido");
+        menuParametrosSistema();
     }
+
+    System.out.println("Digite o nome do Aviao: ");
+    String nome = sc.nextLine(); // Alterado para nextLine
+   
+
+    System.out.println("Digite a quantidade de assentos: ");
+    int qtdAssentos = sc.nextInt();
+    sc.nextLine(); // Novamente, consumir a quebra de linha após o número
+    if (auxiliarQtdAssentos(qtdAssentos) == false) {
+        System.out.println("Quantidade de assentos inválido");
+        menuParametrosSistema();
+    }
+
+    avioes.add(new Aviao(codigoAviao, nome, qtdAssentos));
+    System.out.println("Avião cadastrado com sucesso!");
+}
+
 
     private void cadastrarVoo() throws Exception {
         System.out.println("Digite o código do avião: ");
@@ -195,24 +195,28 @@ private void menuParametrosSistema() {
 
     private void cadastrarCliente() throws Exception {
         System.out.println("Digite o nome do cliente: ");
-        String nome = sc.next();
+        sc.nextLine(); 
+        String nome = sc.nextLine();
         if (validarNome(nome) == false) {
             System.out.println("Nome inválido");
             menuParametrosSistema();
         }
+    
         System.out.println("Digite o CPF do cliente: ");
-        String cpf = sc.next();
+        String cpf = sc.nextLine();
         cpf = adicionarCPF(cpf);
+    
         System.out.println("Digite o telefone do cliente: ");
-        String telefone = sc.next();
+        String telefone = sc.nextLine();
         if (validarTelefone(telefone) == false) {
             System.out.println("Telefone inválido");
             menuParametrosSistema();
         }
-
+    
         clientes.add(new Cliente(nome, cpf, telefone));
         System.out.println("Cliente cadastrado com sucesso!");
     }
+    
 
    public void menuParametrosVoos() {
     boolean continuar = true;
@@ -247,7 +251,7 @@ private void menuParametrosSistema() {
                     break;
                 case 5:
                     menu();
-                    continuar = false; // Sai do loop
+                    continuar = false; 
                     break;
                 default:
                     System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
@@ -255,10 +259,10 @@ private void menuParametrosSistema() {
             }
         } catch (InputMismatchException ime) {
             System.out.println("Entrada inválida. Por favor, digite um número.");
-            sc.nextLine(); // Limpa o buffer do scanner
+            sc.nextLine(); 
         } catch (Exception e) {
-            System.out.println("Ocorreu um erro: " + e.getMessage());
-            e.printStackTrace(); // Para propósitos de depuração
+            
+            e.printStackTrace(); 
         }
     }
 }
@@ -276,6 +280,7 @@ private void menuParametrosSistema() {
         }
 
         buscarVoo(codigoVoo).setStatus(StatusVoo.CANCELADO);
+        voos.remove(buscarVoo(codigoVoo));
         System.out.println("Voo cancelado com sucesso!");
     }
 
@@ -354,7 +359,7 @@ private void menuParametrosSistema() {
                         if (voos.isEmpty()) {
                             System.out.println("Não há vendas cadastradas");
                         } else {
-                            listarVendas();
+                            listarTodasVendas();
                         }
                         break;
                     case 4:
@@ -376,6 +381,23 @@ private void menuParametrosSistema() {
                 System.out.println("Entrada inválida. Por favor, digite um número.");
                 sc.nextLine(); // Limpa o buffer do scanner
             }
+        }
+    }
+
+    private void listarTodasVendas() {
+        if(vendasAtivas.isEmpty()){
+            System.out.println("Não possui vendas ativas");
+            return;
+        }
+        for (int i = 0; i < vendasAtivas.size(); i++) {
+            System.out.println(vendasAtivas.get(i).toString() + " - VENDA ATIVA");
+        }
+        if(vendasCanceladas.isEmpty()){
+            System.out.println("Não possui vendas canceladas");
+            return;
+        }
+        for(int i = 0; i < vendasCanceladas.size(); i++) {
+            System.out.println(vendasCanceladas.get(i).toString() + " - VENDA CANCELADA");
         }
     }
     
@@ -598,7 +620,7 @@ private void menuParametrosSistema() {
 
     private boolean validarNome(String nome) {
         for (int i = 0; i < nome.length(); i++) {
-            if (Character.isLetter(nome.charAt(i)) == false) {
+            if (Character.isLetter(nome.charAt(i)) == false && nome.charAt(i)!= ' ') {
                 return false;
             }
         }
@@ -610,6 +632,10 @@ private void menuParametrosSistema() {
     }
 
     private String adicionarCPF(String cpf) throws Exception {
+        if(validarCPF(cpf) == false){
+            System.out.println("CPF inválido");
+            menuParametrosSistema();
+        }
         if (clientes.isEmpty()) {
             return cpf;
         }
@@ -650,6 +676,13 @@ private void menuParametrosSistema() {
     }
 
     private boolean validarTelefone(String telefone) {
+        for (int i = 0; i < telefone.length(); i++) {
+            char c = telefone.charAt(i);
+            if (Character.isLetter(c) == true) { 
+                return false;
+               
+            }
+        }
         if (telefone.length() > 14 && telefone.length() < 8) {
             return false;
         }
