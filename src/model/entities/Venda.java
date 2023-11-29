@@ -1,16 +1,10 @@
+package entities;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class Venda {
     private String horarioCompra;
     private Cliente cliente;
     private Voo voo;
-    private static ArrayList<Venda> vendasRealizadas = new ArrayList<>();
-    private static ArrayList<Venda> vendasCanceladas= new ArrayList<>();
-
-    public static ArrayList<Venda> getVendasCanceladas(){
-        return vendasCanceladas;
-    }
 
     public Cliente getCliente() {
         return cliente;
@@ -20,17 +14,11 @@ public class Venda {
         return voo;
     }
 
-    public static ArrayList<Venda> getVendasRealizadas() {
-        return vendasRealizadas;
-    }
-
     public Venda(Cliente cliente, Voo voo) {
         this.cliente = cliente;
         this.voo = assentosDisponiveis(voo);
         this.horarioCompra = obterHorarioAtual();
         imprimirVenda();
-        vendasRealizadas.add(this);
-        //voo.decretarAssentos();
     }
 
     
@@ -45,7 +33,6 @@ public class Venda {
 
     private Voo assentosDisponiveis(Voo voo) {
         if (voo.getAssentosDisponiveis() > 0) {
-            voo.decretarAssentos();
             return voo;
         } else {
             System.out.println("Não possui assentos disponíveis");
